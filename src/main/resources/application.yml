@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: shedlock-distributed-job-coordination
+  datasource:
+    url: jdbc:postgresql://localhost:5432/shedlockdemo
+    username: shedlock
+    password: shedlock
+  flyway:
+    enabled: true
+
+server:
+  port: 8080

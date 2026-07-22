@@ -1,0 +1,10 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: shedlock-demo-postgres
+    environment:
+      - POSTGRES_DB=shedlockdemo
+      - POSTGRES_USER=shedlock
+      - POSTGRES_PASSWORD=shedlock
+    ports:
+      - "5432:5432"

@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      - name: "Integration test (Testcontainers: real Postgres, naive duplicate-execution vs ShedLock)"
+        run: ./mvnw -B test -Dtest=SchedulerLockConcurrencyIT
+
+      - name: Package
+        run: ./mvnw -B -DskipTests package
+
+      - name: Upload jar
+        uses: actions/upload-artifact@v4
+        with:
+          name: shedlock-distributed-job-coordination-jar
+          path: target/shedlock-distributed-job-coordination-*.jar
